@@ -4,7 +4,8 @@ Docker image of Blocky, fast and lightweight DNS proxy as ad-blocker.
 
 ## Goal
 
-To provide rootless image with no set capabilities and pre-populated block lists.
+To provide a rootless image with no capabilities set.
+For the block lists take a look at [AdGuard Home data container](https://gitea.flakybit.net/flakybit/blocky-agh-oci).
 
 ## Images
 
