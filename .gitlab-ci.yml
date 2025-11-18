@@ -5,7 +5,7 @@ stages:
 variables:
   APP_NAME: 'blocky'
   IMAGE_NAME: 'server'
-  BLOCKY_VERSION: '0.26.2'
+  BLOCKY_VERSION: '0.27.0'
 
 distributives:
   stage: build
@@ -22,7 +22,7 @@ distributives:
     - mkdir dist/
 
     - echo "Downloading Blocky $BLOCKY_VERSION"
-    - wget -vn "https://github.com/0xERR0R/blocky/releases/download/v${BLOCKY_VERSION}/blocky_v${BLOCKY_VERSION}_Linux_x86_64.tar.gz"
+    - wget -nv "https://github.com/0xERR0R/blocky/releases/download/v${BLOCKY_VERSION}/blocky_v${BLOCKY_VERSION}_Linux_x86_64.tar.gz"
     - wget -nv "https://github.com/0xERR0R/blocky/releases/download/v${BLOCKY_VERSION}/blocky_checksums.txt"
     - sha256sum -c --ignore-missing blocky_checksums.txt
     - tar -xpzf "blocky_v${BLOCKY_VERSION}_Linux_x86_64.tar.gz" -C dist/
