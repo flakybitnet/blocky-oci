@@ -1,4 +1,4 @@
-FROM gcr.io/distroless/static-debian12:debug-nonroot
+FROM gcr.io/distroless/static-debian13:debug-nonroot
 
 COPY dist/blocky /app/blocky
 
