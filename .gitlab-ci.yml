@@ -1,5 +1,6 @@
 stages:
   - build
+  - package
   - mirror
 
 variables:
@@ -31,13 +32,11 @@ distributives:
       - dist/
 
 images:
-  stage: build
+  stage: package
   rules:
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
       when: never
     - when: on_success
-  needs:
-    - distributives
   dependencies:
     - distributives
   image: quay.io/buildah/stable:v1.43.1
@@ -49,13 +48,11 @@ images:
     - buildah push "$CI_REGISTRY_IMAGE/$IMAGE_NAME:$CI_COMMIT_REF_NAME"
 
 images-debug:
-  stage: build
+  stage: package
   rules:
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
       when: never
     - when: on_success
-  needs:
-    - distributives
   dependencies:
     - distributives
   image: quay.io/buildah/stable:v1.43.1
@@ -66,7 +63,7 @@ images-debug:
     - buildah build -t "$CI_REGISTRY_IMAGE/$IMAGE_NAME:$CI_COMMIT_REF_NAME-debug" ./server-debug.containerfile
     - buildah push "$CI_REGISTRY_IMAGE/$IMAGE_NAME:$CI_COMMIT_REF_NAME-debug"
 
-mirror-git-github:
+git-github:
   stage: mirror
   rules:
     - if: $CI_PIPELINE_SOURCE == 'push'
@@ -85,7 +82,7 @@ mirror-git-github:
         git push github tag $CI_COMMIT_TAG;
         fi
 
-mirror-images-github:
+images-github:
   stage: mirror
   rules:
     - if: $CI_COMMIT_TAG
@@ -100,7 +97,7 @@ mirror-images-github:
     - skopeo copy "docker://$CI_REGISTRY_IMAGE/$IMAGE_NAME:$CI_COMMIT_REF_NAME" "docker://$REGISTRY/$IMAGE:$CI_COMMIT_REF_NAME"
     - skopeo copy "docker://$CI_REGISTRY_IMAGE/$IMAGE_NAME:$CI_COMMIT_REF_NAME-debug" "docker://$REGISTRY/$IMAGE:$CI_COMMIT_REF_NAME-debug"
 
-mirror-images-quay:
+images-quay:
   stage: mirror
   rules:
     - if: $CI_COMMIT_TAG
@@ -115,7 +112,7 @@ mirror-images-quay:
     - skopeo copy "docker://$CI_REGISTRY_IMAGE/$IMAGE_NAME:$CI_COMMIT_REF_NAME" "docker://$REGISTRY/$IMAGE:$CI_COMMIT_REF_NAME"
     - skopeo copy "docker://$CI_REGISTRY_IMAGE/$IMAGE_NAME:$CI_COMMIT_REF_NAME-debug" "docker://$REGISTRY/$IMAGE:$CI_COMMIT_REF_NAME-debug"
 
-mirror-images-amazon:
+images-amazon:
   stage: mirror
   rules:
     - if: $CI_COMMIT_TAG
@@ -130,6 +127,6 @@ mirror-images-amazon:
   script:
     - printf '{"credHelpers":{"%s":"%s"}}' "$REGISTRY" 'ecr-login' > "$HOME/auth.json"
     - skopeo copy "docker://$CI_REGISTRY_IMAGE/$IMAGE_NAME:$CI_COMMIT_REF_NAME" "docker://$REGISTRY/$IMAGE:$CI_COMMIT_REF_NAME"
-        --dest-authfile="$HOME/auth.json"
+      --dest-authfile="$HOME/auth.json"
     - skopeo copy "docker://$CI_REGISTRY_IMAGE/$IMAGE_NAME:$CI_COMMIT_REF_NAME-debug" "docker://$REGISTRY/$IMAGE:$CI_COMMIT_REF_NAME-debug"
-        --dest-authfile="$HOME/auth.json"
+      --dest-authfile="$HOME/auth.json"
