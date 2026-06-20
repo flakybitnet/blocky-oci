@@ -6,7 +6,7 @@ stages:
 variables:
   APP_NAME: 'blocky'
   IMAGE_NAME: 'server'
-  BLOCKY_VERSION: '0.32.0'
+  BLOCKY_VERSION: '0.32.1'
 
 distributives:
   stage: build
