@@ -6,7 +6,7 @@ stages:
 variables:
   APP_NAME: 'blocky'
   IMAGE_NAME: 'server'
-  BLOCKY_VERSION: '0.32.1' # https://github.com/0xERR0R/blocky/releases
+  BLOCKY_VERSION: '0.33.0' # https://github.com/0xERR0R/blocky/releases
   IMG_DEBIAN: 'public.ecr.aws/docker/library/debian:trixie-slim'
   IMG_BUILDAH: 'quay.io/buildah/stable:v1.43.1'
   IMG_GIT: 'docker.io/alpine/git:v2.54.0'
