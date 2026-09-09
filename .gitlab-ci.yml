@@ -5,9 +5,9 @@ stages:
 
 variables:
   IMAGE_NAME: 'server'
-  BLOCKY_VERSION: '0.34.0' # https://github.com/0xERR0R/blocky/releases
+  BLOCKY_VERSION: '0.35.0' # https://github.com/0xERR0R/blocky/releases
   IMG_DEBIAN: 'public.ecr.aws/docker/library/debian:trixie-slim'
-  IMG_BUILDAH: 'quay.io/buildah/stable:v1.43.1'
+  IMG_BUILDAH: 'quay.io/buildah/stable:v1.43.2'
   IMG_GIT: 'docker.io/alpine/git:v2.54.0'
   IMG_SKOPEO: 'public.ecr.aws/flakybitnet/skopeo:1.22.2-fb1'
 
